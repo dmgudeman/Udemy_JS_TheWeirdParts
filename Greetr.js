@@ -1,4 +1,4 @@
-(function(global, $){
+;(function(global, $){
 
     var Greetr = function(firstName, lastName, language){
         return new Greetr.init(firstName, lastName, language);
@@ -70,6 +70,23 @@
             this.language = lang;
             this.validate();
             return this;  // make chainable
+        },
+        
+        HTMLGreeting: function(selector, formal) {
+            if(!$){
+                throw 'jQuery not loaded';
+            }
+            if(!selector){
+                throw 'Missing jQuery selector'
+            }
+            var msg;
+            if (formal) {
+                msg = this.formalGreeting();
+            } else {
+                msg = this.greeting();
+            } 
+            $(selector).html(msg);
+            return this; // make chainable
         }
     };
     // end Greetr.prototype -------------------------------------
@@ -79,6 +96,8 @@
         self.firstName = firstName || 'Dave';
         self.lastName = lastName || 'Gudeman';
         self.language = language || 'en';
+
+        self.validate();
     }
     Greetr.init.prototype = Greetr.prototype;
 
